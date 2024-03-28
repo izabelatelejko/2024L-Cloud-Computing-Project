@@ -1,5 +1,5 @@
 #!/bin/bash     
-PROJECT_ID="test-house"
+PROJECT_ID="test-house-418522"
 REGION="europe-west3"
 REPOSITORY="houseprice"
 IMAGE_TAG='training:latest'
