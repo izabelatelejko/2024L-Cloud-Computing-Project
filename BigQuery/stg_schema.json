@@ -1,0 +1,134 @@
+[
+    {
+        "name": "index",
+        "type": "INT64"
+    },
+    {
+        "name": "ses_rec",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_rec_avg",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_rec_sd",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_rec_cv",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_n_r",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_n_r",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "tran_n_r",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "rev_sum_r",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat_n_avg",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_ho_avg",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_ho_sd",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "ses_wknd_r",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat1_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat2_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat3_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat4_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat5_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat6_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat7_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat8_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat9_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat10_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat11_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat12_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat13_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat17_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat18_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat21_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat23_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "int_cat24_n",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "target_class",
+        "type": "INT64"
+    }
+]
