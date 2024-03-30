@@ -1,7 +1,3 @@
-provider "google" {
-  project = "cloud-computing-project-418718"
-}
-
 resource "google_bigquery_dataset" "common" {
     dataset_id                  = "common_ds"
     friendly_name               = "Common dataset"

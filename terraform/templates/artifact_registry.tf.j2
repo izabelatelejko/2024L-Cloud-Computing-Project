@@ -1,7 +1,3 @@
-provider "google" {
-    project = "{{ gcp_project_id }}"
-}
-
 resource "google_artifact_registry_repository" "docker_img_repo" {
   location = "{{ region }}"
   repository_id = "{{ repository }}"

@@ -7,3 +7,12 @@ Project for the 2024L Cloud Computing course
 * automatically add users to project  
 * function to run all templates (and generate them first for DOCKER and TERRAFORM) - `setup_project` or sth
 * add `IMAGE` to config (for now we have fixed value: `training`) ?
+
+### Run terraform scripts:
+
+```{sh}
+cd terraform
+terraform init
+terraform plan
+terraform apply # confirm with yes
+```
