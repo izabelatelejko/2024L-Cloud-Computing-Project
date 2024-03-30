@@ -11,6 +11,7 @@ class GcpConfig(BaseModel):
     gcp_project_id: str
     gcp_bucket: str
     region: str
+    repository: str
     main_table_id: str
     stg_table_id: str
 

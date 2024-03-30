@@ -1,5 +1,6 @@
 gcp_project_id: cloud-computing-project-418718
 gcp_bucket: project_bucket_52dfc7cd
 region: europe-west3
+repository: docker_img
 main_table_id: main_table
 stg_table_id: stg_table
