@@ -1,0 +1,9 @@
+provider "google" {
+  project = "{{ gcp_project_id }}"
+}
+
+resource "google_storage_bucket" "project_bucket" {
+    name          = "{{ gcp_bucket }}"
+    location      = "{{ region }}"
+    force_destroy = true
+}
