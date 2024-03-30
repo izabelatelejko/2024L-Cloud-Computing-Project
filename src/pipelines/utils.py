@@ -4,6 +4,7 @@ import numpy as np
 from google.cloud import bigquery
 
 
+
 def remove_highly_correlated_features(df, threshold=0.9):
     corr_matrix = df.corr().abs()
     upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
