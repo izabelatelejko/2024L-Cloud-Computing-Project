@@ -3,7 +3,8 @@ Project for the 2024L Cloud Computing course
 
 ## TODO:
 
-* step for model validation
+* **step for model validation**
+* **add to config some model related params**
 * automatically create project in terraform and enable Vertex AI, BigQuery, and Artifact Registry
 * automatically add permissions for default service account (`storage.objects`, `bigquery`)
 * automatically add users to project  
