@@ -99,6 +99,11 @@ target/
 profile_default/
 ipython_config.py
 
+# Compiled pipeline files
+model_training_pipeline.json
+train_model.yaml
+get_and_process_data.yaml
+
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
 #   intended to run in multiple environments; otherwise, check them in:

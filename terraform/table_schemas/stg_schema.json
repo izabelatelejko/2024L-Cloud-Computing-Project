@@ -1,9 +1,5 @@
 [
     {
-        "name": "index",
-        "type": "INT64"
-    },
-    {
         "name": "ses_rec",
         "type": "FLOAT64"
     },
