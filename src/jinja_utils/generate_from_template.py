@@ -1,8 +1,9 @@
 import os
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
-from src.jinja_utils.template_type import TemplateType
 from src.config.gcp_config import load_config
+from src.jinja_utils.template_type import TemplateType
 
 
 def generate_from_template(template_filename: str, template_type: TemplateType):

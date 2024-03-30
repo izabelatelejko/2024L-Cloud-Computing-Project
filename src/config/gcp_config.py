@@ -2,6 +2,8 @@ from functools import cached_property
 from pathlib import Path
 
 import yaml
+from google.api_core import exceptions
+from google.cloud import storage
 from pydantic import BaseModel, computed_field
 
 
@@ -37,3 +39,13 @@ class GcpConfig(BaseModel):
 def load_config(config_filename: Path = Path("gcp_config.yml")) -> GcpConfig:
     """Load configuration."""
     return GcpConfig(**yaml.safe_load(config_filename.read_text()))
+
+
+def check_valid_bucket_name(bucket_name: str):
+    """Ckeck if bucket name is available."""
+    client = storage.Client()
+    try:
+        exists = client.bucket(bucket_name).exists()
+    except exceptions.Forbidden:
+        exists = True
+    return exists
