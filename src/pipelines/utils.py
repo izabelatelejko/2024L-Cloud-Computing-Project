@@ -2,7 +2,7 @@
 
 import numpy as np
 from google.cloud import bigquery
-
+from sklearn.ensemble import RandomForestClassifier
 
 
 def remove_highly_correlated_features(df, threshold=0.9):
@@ -36,3 +36,29 @@ def create_table_from_df(bq_client, df, table_id, write_disposition="WRITE_APPEN
     job_config = bigquery.LoadJobConfig(write_disposition=write_disposition)
     job = bq_client.load_table_from_dataframe(df, table_id, job_config=job_config)
     job.result()
+
+
+def preprocess_data(df, target_column_name):
+    y = df[target_column_name]
+    X = df.drop(columns=[target_column_name])
+
+    X_processed = X.drop(remove_highly_correlated_features(df, threshold=0.7), axis=1)
+    X_processed = X_processed.drop(["visitorid"], axis=1)
+    X_processed = X_processed.drop(remove_constant_features(X_processed), axis=1)
+    X_processed = standarise_float_columns(X_processed)
+    X_processed = normalise_int_columns(X_processed)
+    X_processed[target_column_name] = y
+
+    return X_processed
+
+
+def model_train(X_processed, target_column_name):
+    y = X_processed["target_class"]
+    X = X_processed.drop(columns=["target_class"])
+
+    clf = RandomForestClassifier(
+        max_depth=10, random_state=1307, n_estimators=100, class_weight="balanced"
+    )
+    clf.fit(X, y)
+
+    return clf
