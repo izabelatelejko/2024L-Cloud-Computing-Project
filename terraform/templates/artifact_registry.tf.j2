@@ -4,7 +4,7 @@ provider "google" {
 
 resource "google_artifact_registry_repository" "docker_img_repo" {
   location = "{{ region }}"
-  repository_id = "docker_img"
+  repository_id = "{{ repository }}"
   description = "Repository keeps docker images for Vertex AI"
   format = "DOCKER"
 }
