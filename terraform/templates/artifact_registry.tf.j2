@@ -1,0 +1,10 @@
+provider "google" {
+    project = "{{ gcp_project_id }}"
+}
+
+resource "google_artifact_registry_repository" "docker_img_repo" {
+  location = "{{ region }}"
+  repository_id = "docker_img"
+  description = "Repository keeps docker images for Vertex AI"
+  format = "DOCKER"
+}
