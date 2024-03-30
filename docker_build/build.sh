@@ -1,7 +1,7 @@
 #!/bin/bash     
 PROJECT_ID="cloud-computing-project-418718"
 REGION="europe-west3"
-REPOSITORY="docker_img"
+REPOSITORY="docker-img"
 IMAGE='training'
 IMAGE_TAG='training:latest'
 

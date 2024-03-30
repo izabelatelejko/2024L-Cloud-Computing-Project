@@ -6,7 +6,7 @@ from src.config.gcp_config import load_config
 from src.jinja_utils.template_type import TemplateType
 
 
-def generate_from_template(template_filename: str, template_type: TemplateType):
+def generate_from_template(template_filename: str, template_type: TemplateType) -> None:
     """Generate terraform scripts with GCP config from jinja2 template."""
     config = load_config().model_dump()
     templates_dir = template_type.value
@@ -23,7 +23,7 @@ def generate_from_template(template_filename: str, template_type: TemplateType):
         f.write(out_file)
 
 
-def generate_all_templates(template_type: TemplateType):
+def generate_all_templates(template_type: TemplateType) -> None:
     """Generate files from all templates for given template type."""
     templates_dir = f"./{template_type.value}/templates"
     for template_filename in os.listdir(templates_dir):

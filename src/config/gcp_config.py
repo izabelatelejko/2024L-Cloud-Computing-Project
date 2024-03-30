@@ -14,8 +14,9 @@ class GcpConfig(BaseModel):
     gcp_bucket: str
     region: str
     repository: str
-    main_table_id: str
-    stg_table_id: str
+    dataset_id: str
+    main_table_name: str
+    stg_table_name: str
 
     @computed_field
     @cached_property
@@ -35,13 +36,25 @@ class GcpConfig(BaseModel):
         """Base docker image."""
         return f"{self.region}-docker.pkg.dev/{self.gcp_project_id}/{self.repository}/training"
 
+    @computed_field
+    @cached_property
+    def main_table_id(self) -> str:
+        """Main table ID."""
+        return f"{self.gcp_project_id}.{self.dataset_id}.{self.main_table_name}"
+
+    @computed_field
+    @cached_property
+    def stg_table_id(self) -> str:
+        """Staging table ID."""
+        return f"{self.gcp_project_id}.{self.dataset_id}.{self.stg_table_name}"
+
 
 def load_config(config_filename: Path = Path("gcp_config.yml")) -> GcpConfig:
     """Load configuration."""
     return GcpConfig(**yaml.safe_load(config_filename.read_text()))
 
 
-def check_valid_bucket_name(bucket_name: str):
+def check_valid_bucket_name(bucket_name: str) -> bool:
     """Ckeck if bucket name is available."""
     client = storage.Client()
     try:
