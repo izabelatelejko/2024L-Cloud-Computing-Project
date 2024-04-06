@@ -17,6 +17,10 @@ class GcpConfig(BaseModel):
     dataset_id: str
     main_table_name: str
     stg_table_name: str
+    gcp_serving_bucket: str
+    serve_cf_name: str
+    max_serve_cf_instances: int
+    serve_cv_available_memory: str
 
     @computed_field
     @cached_property
