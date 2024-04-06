@@ -43,7 +43,7 @@ def preprocess_data(df, target_column_name):
     X = df.drop(columns=[target_column_name])
 
     X_processed = X.drop(remove_highly_correlated_features(df, threshold=0.7), axis=1)
-    X_processed = X_processed.drop(["visitorid"], axis=1)
+    X_processed = X_processed.drop(["visitorid", "index"], axis=1)
     X_processed = X_processed.drop(remove_constant_features(X_processed), axis=1)
     X_processed = standarise_float_columns(X_processed)
     X_processed = normalise_int_columns(X_processed)
@@ -53,11 +53,11 @@ def preprocess_data(df, target_column_name):
 
 
 def model_train(X_processed, target_column_name):
-    y = X_processed["target_class"]
-    X = X_processed.drop(columns=["target_class"])
+    y = X_processed[target_column_name]
+    X = X_processed.drop(columns=[target_column_name])
 
     clf = RandomForestClassifier(
-        max_depth=10, random_state=1307, n_estimators=100, class_weight="balanced"
+        max_depth=5, random_state=1307, n_estimators=100, class_weight="balanced"
     )
     clf.fit(X, y)
 
