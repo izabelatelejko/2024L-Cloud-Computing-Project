@@ -12,13 +12,15 @@ import json
 # creds.refresh(auth_req)
 
 r = requests.post(
-    "https://europe-west3-cloud-computing-project-418718.cloudfunctions.net/test-cf",
+    "https://europe-west3-cloud-computing-project-418718.cloudfunctions.net/serve-cf",
     headers={
         # "Authorization": f"Bearer {creds.token}",
         "Content-Type": "application/json",
     },
-    json={"test_input": "testowe cos"},
+    json={"request_type": "get_model_prediction", "input": '{"test": "testaaa"}'},
 )
-out = r.content.decode("ascii")
-out = json.loads(out)
-print(out["test"])
+# out = r.content.decode("ascii")
+# out = json.loads(out)
+# print(out["test"])
+
+print(r.content)
