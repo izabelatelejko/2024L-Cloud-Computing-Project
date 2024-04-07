@@ -33,6 +33,12 @@ terraform apply # confirm with yes
 ### Build and push docker image
 
 ```{sh}
-./build_docker/build.sh
-./build_docker/push_image.sh
+./docker_build/build.sh
+./docker_build/push_image.sh
+```
+
+### Upload data to BQ table
+
+```{sh}
+python3 load_mock_data.py
 ```

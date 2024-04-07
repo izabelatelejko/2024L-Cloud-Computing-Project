@@ -2,7 +2,6 @@ from google.cloud import bigquery
 import pandas as pd
 
 df = pd.read_csv("ecom-user-churn-data.csv")
-df = df.iloc[20000:49358, :]
 bq_client = bigquery.Client(
     location="europe-west3", project="cloud-computing-project-418718"
 )
