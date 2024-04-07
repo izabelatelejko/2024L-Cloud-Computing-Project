@@ -16,7 +16,6 @@ class GcpConfig(BaseModel):
     repository: str
     dataset_id: str
     main_table_name: str
-    stg_table_name: str
     gcp_serving_bucket: str
     serve_cf_name: str
     max_serve_cf_instances: int
@@ -45,12 +44,6 @@ class GcpConfig(BaseModel):
     def main_table_id(self) -> str:
         """Main table ID."""
         return f"{self.gcp_project_id}.{self.dataset_id}.{self.main_table_name}"
-
-    @computed_field
-    @cached_property
-    def stg_table_id(self) -> str:
-        """Staging table ID."""
-        return f"{self.gcp_project_id}.{self.dataset_id}.{self.stg_table_name}"
 
 
 def load_config(config_filename: Path = Path("gcp_config.yml")) -> GcpConfig:

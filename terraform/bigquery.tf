@@ -17,14 +17,3 @@ resource "google_bigquery_table" "main_data" {
     ]
 }
 
-resource "google_bigquery_table" "stg_data" {
-    dataset_id = "common_ds"
-    table_id   = "stg_table"
-    deletion_protection = false
-
-    schema = file("./table_schemas/stg_schema.json")
-
-    depends_on = [
-        google_bigquery_dataset.common,
-    ]
-} 
