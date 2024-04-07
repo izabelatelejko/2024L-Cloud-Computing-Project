@@ -11,7 +11,11 @@ Project for the 2024L Cloud Computing course
 * function to run all templates (and generate them first for DOCKER and TERRAFORM) - `setup_project` or sth
 * add `IMAGE` to config (for now we have fixed value: `training`) ?
 * add serving CF deployment in workflows using command `gcloud functions deploy <CF-name> --gen2 --runtime=python310 --region=europe-west3 --source=.terraform/cf_source/<source_folder>/ --entry-point=run --trigger-http`
+<<<<<<< HEAD
 * on model bucket keep models only for X days (perhaps add maintenance pipeline which does that?)
+=======
+* add logging (when pipeline code will be ready)
+>>>>>>> 8a41805499a4c2fdcd4e32c40f4b7a563802591e
 
 ### Authenticate with gcloud
 

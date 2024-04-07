@@ -32,10 +32,11 @@ def normalise_int_columns(df):
     return df
 
 
-def create_table_from_df(bq_client, df, table_id, write_disposition="WRITE_APPEND"):
-    job_config = bigquery.LoadJobConfig(write_disposition=write_disposition)
-    job = bq_client.load_table_from_dataframe(df, table_id, job_config=job_config)
-    job.result()
+# to delete:
+# def create_table_from_df(bq_client, df, table_id, write_disposition="WRITE_APPEND"):
+#     job_config = bigquery.LoadJobConfig(write_disposition=write_disposition)
+#     job = bq_client.load_table_from_dataframe(df, table_id, job_config=job_config)
+#     job.result()
 
 
 def preprocess_data(df, target_column_name):

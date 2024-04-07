@@ -4,7 +4,6 @@ region: europe-west3
 repository: docker-img
 dataset_id: common_ds
 main_table_name: main_table
-stg_table_name: stg_table
 gcp_serving_bucket: serve_cf_bucket_35ar32da
 serve_cf_name: serve-cf
 max_serve_cf_instances: 1
