@@ -2,6 +2,8 @@ import functions_framework
 import json
 from datetime import datetime
 from google.cloud import storage
+import pickle
+import pandas as pd
 
 
 BUCKET_NAME = "project_bucket_52dfc7cd"
@@ -25,11 +27,17 @@ def find_newest_model(client):
 
 def get_model_prediction(input_json):
     storage_client = storage.Client("cloud-computing-project-418718")
-    newest_model = find_newest_model(storage_client)
+    newest_model_name = find_newest_model(storage_client)
 
-    # TODO: next step is to download pickle from newest_model location, load it as scikit learn model and make prediction from input_json
+    model_bucket = storage_client.bucket(BUCKET_NAME)
+    model_blob = model_bucket.blob(newest_model_name)
+    model_pickle = model_blob.download_as_string()
+    model = pickle.loads(model_pickle)
 
-    return newest_model
+    print(pd.DataFrame(input_json, index=[0]))
+    prediction = model.predict(pd.DataFrame(input_json, index=[0]))
+
+    return f"Got model: {newest_model_name}. The prediction for input is: {prediction}."
 
 
 @functions_framework.http
