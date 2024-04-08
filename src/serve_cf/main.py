@@ -5,6 +5,7 @@ from datetime import datetime
 import functions_framework
 import pandas as pd
 from google.cloud import storage
+import os
 
 BUCKET_NAME = "project_bucket_52dfc7cd"
 PROJECT_NAME = "cloud-computing-project-418718"
@@ -23,9 +24,9 @@ def find_newest_model(client):
     newest_time = datetime.min
 
     for blob in blobs:
-        model_timestamp = datetime.strptime(blob.name.split("/")[-1], "%d-%m-%Y:%H%M")
+        model_timestamp = datetime.strptime(blob.name.split("/")[-2], "%d-%m-%Y:%H%M")
         if model_timestamp > newest_time:
-            newest_model = blob.name
+            newest_model = blob.name.split("/")[-2]
             newest_time = model_timestamp
 
     return newest_model
@@ -33,19 +34,27 @@ def find_newest_model(client):
 
 def get_model_prediction(input_json):
     storage_client = storage.Client(PROJECT_NAME)
-    newest_model_name = find_newest_model(storage_client)
+    newest_model_folder = find_newest_model(storage_client)
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
-    model_blob = model_bucket.blob(newest_model_name)
+
+    model_blob = model_bucket.blob(os.path.join("models", newest_model_folder, "model"))
     model_pickle = model_blob.download_as_string()
     model = pickle.loads(model_pickle)
 
-    print(pd.DataFrame(input_json, index=[0]))
+    train_features_blob = model_bucket.blob(
+        os.path.join("models", newest_model_folder, "preprocess_features")
+    )
+    train_features_pickle = train_features_blob.download_as_string()
+    train_features = pickle.loads(train_features_pickle)
+
     prediction = model.predict_proba(pd.DataFrame(input_json, index=[0]))
 
     prediction = find_top_probas(prediction, top_n=3)
 
-    return f"Got model: {newest_model_name}. You can encounter pokemons: {prediction}."
+    return (
+        f"Got model: {newest_model_folder}. You can encounter pokemons: {prediction}."
+    )
 
 
 @functions_framework.http

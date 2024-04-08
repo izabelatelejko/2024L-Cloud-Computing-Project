@@ -26,8 +26,9 @@ def standarize_columns(df):
 
 def initial_pokemon_preprocess(df):
     n_poke_appeared = np.sum(df.iloc[:, 49:200], axis=1)
+    df = df.drop(["index", "Unnamed: 0"], axis=1)
     cols_to_be_dropped = (
-        ["class", "appearedLocalTime", "continent", "city", "weather", "_id", "index"]
+        ["class", "appearedLocalTime", "continent", "city", "weather", "_id"]
         + list(df.columns[36:42])
         + list(df.columns[43:49])
         + list(df.columns[49:200])
