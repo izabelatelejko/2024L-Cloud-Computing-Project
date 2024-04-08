@@ -1,10 +1,10 @@
-import functions_framework
 import json
-from datetime import datetime
-from google.cloud import storage
 import pickle
-import pandas as pd
+from datetime import datetime
 
+import functions_framework
+import pandas as pd
+from google.cloud import storage
 
 BUCKET_NAME = "project_bucket_52dfc7cd"
 PROJECT_NAME = "cloud-computing-project-418718"

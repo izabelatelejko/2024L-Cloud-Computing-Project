@@ -1,9 +1,9 @@
 """Pipeline utils."""
 
 import numpy as np
+import pandas as pd
 from google.cloud import bigquery
 from sklearn.ensemble import RandomForestClassifier
-import pandas as pd
 
 
 def remove_highly_correlated_features(df, threshold=0.9):
