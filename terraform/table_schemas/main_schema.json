@@ -4,199 +4,807 @@
         "type": "INT64"
     },
     {
-        "name": "visitorid",
+        "name": "pokemonId",
         "type": "INT64"
     },
     {
-        "name": "ses_rec",
+        "name": "latitude",
         "type": "FLOAT64"
     },
     {
-        "name": "ses_rec_avg",
+        "name": "longitude",
         "type": "FLOAT64"
     },
     {
-        "name": "ses_rec_sd",
-        "type": "FLOAT64"
+        "name": "appearedLocalTime",
+        "type": "STRING"
     },
     {
-        "name": "ses_rec_cv",
-        "type": "FLOAT64"
+        "name": "_id",
+        "type": "STRING"
     },
     {
-        "name": "user_rec",
-        "type": "FLOAT64"
+        "name": "appearedTimeOfDay",
+        "type": "STRING"
     },
     {
-        "name": "ses_n",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_n_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "int_n",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "int_n_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "tran_n",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "tran_n_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "rev_sum",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "rev_sum_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "major_spend_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "int_cat_n_avg",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "int_itm_n_avg",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_mo_avg",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_mo_sd",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_ho_avg",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_ho_sd",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_wknd_r",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "ses_len_avg",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "time_to_int",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "time_to_tran",
-        "type": "FLOAT64"
-    },
-    {
-        "name": "int_cat1_n",
+        "name": "appearedHour",
         "type": "INT64"
     },
     {
-        "name": "int_cat2_n",
+        "name": "appearedMinute",
         "type": "INT64"
     },
     {
-        "name": "int_cat3_n",
+        "name": "appearedDayOfWeek",
+        "type": "STRING"
+    },
+    {
+        "name": "appearedDay",
         "type": "INT64"
     },
     {
-        "name": "int_cat4_n",
+        "name": "appearedMonth",
         "type": "INT64"
     },
     {
-        "name": "int_cat5_n",
+        "name": "appearedYear",
         "type": "INT64"
     },
     {
-        "name": "int_cat6_n",
+        "name": "terrainType",
         "type": "INT64"
     },
     {
-        "name": "int_cat7_n",
+        "name": "closeToWater",
+        "type": "BOOL"
+    },
+    {
+        "name": "city",
+        "type": "STRING"
+    },
+    {
+        "name": "continent",
+        "type": "STRING"
+    },
+    {
+        "name": "weather",
+        "type": "STRING"
+    },
+    {
+        "name": "temperature",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "windSpeed",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "windBearing",
         "type": "INT64"
     },
     {
-        "name": "int_cat8_n",
+        "name": "pressure",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "weatherIcon",
+        "type": "STRING"
+    },
+    {
+        "name": "sunriseMinutesMidnight",
         "type": "INT64"
     },
     {
-        "name": "int_cat9_n",
+        "name": "sunriseHour",
         "type": "INT64"
     },
     {
-        "name": "int_cat10_n",
+        "name": "sunriseMinute",
         "type": "INT64"
     },
     {
-        "name": "int_cat11_n",
+        "name": "sunriseMinutesSince",
         "type": "INT64"
     },
     {
-        "name": "int_cat12_n",
+        "name": "sunsetMinutesMidnight",
         "type": "INT64"
     },
     {
-        "name": "int_cat13_n",
+        "name": "sunsetHour",
         "type": "INT64"
     },
     {
-        "name": "int_cat15_n",
+        "name": "sunsetMinute",
         "type": "INT64"
     },
     {
-        "name": "int_cat16_n",
+        "name": "sunsetMinutesBefore",
         "type": "INT64"
     },
     {
-        "name": "int_cat17_n",
-        "type": "INT64"
+        "name": "population_density",
+        "type": "FLOAT64"
     },
     {
-        "name": "int_cat18_n",
-        "type": "INT64"
+        "name": "urban",
+        "type": "BOOL"
     },
     {
-        "name": "int_cat19_n",
-        "type": "INT64"
+        "name": "suburban",
+        "type": "BOOL"
     },
     {
-        "name": "int_cat20_n",
-        "type": "INT64"
+        "name": "midurban",
+        "type": "BOOL"
     },
     {
-        "name": "int_cat21_n",
-        "type": "INT64"
+        "name": "rural",
+        "type": "BOOL"
     },
     {
-        "name": "int_cat22_n",
-        "type": "INT64"
+        "name": "gymDistanceKm",
+        "type": "FLOAT64"
     },
     {
-        "name": "int_cat23_n",
-        "type": "INT64"
+        "name": "gymIn100m",
+        "type": "BOOL"
     },
     {
-        "name": "int_cat24_n",
-        "type": "INT64"
+        "name": "gymIn250m",
+        "type": "BOOL"
     },
     {
-        "name": "target_class",
+        "name": "gymIn500m",
+        "type": "BOOL"
+    },
+    {
+        "name": "gymIn1000m",
+        "type": "BOOL"
+    },
+    {
+        "name": "gymIn2500m",
+        "type": "BOOL"
+    },
+    {
+        "name": "gymIn5000m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopDistanceKm",
+        "type": "FLOAT64"
+    },
+    {
+        "name": "pokestopIn100m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopIn250m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopIn500m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopIn1000m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopIn2500m",
+        "type": "BOOL"
+    },
+    {
+        "name": "pokestopIn5000m",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_1",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_2",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_3",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_4",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_5",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_6",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_7",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_8",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_9",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_10",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_11",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_12",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_13",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_14",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_15",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_16",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_17",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_18",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_19",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_20",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_21",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_22",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_23",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_24",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_25",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_26",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_27",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_28",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_29",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_30",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_31",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_32",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_33",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_34",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_35",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_36",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_37",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_38",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_39",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_40",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_41",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_42",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_43",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_44",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_45",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_46",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_47",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_48",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_49",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_50",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_51",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_52",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_53",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_54",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_55",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_56",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_57",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_58",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_59",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_60",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_61",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_62",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_63",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_64",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_65",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_66",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_67",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_68",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_69",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_70",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_71",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_72",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_73",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_74",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_75",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_76",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_77",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_78",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_79",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_80",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_81",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_82",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_83",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_84",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_85",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_86",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_87",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_88",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_89",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_90",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_91",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_92",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_93",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_94",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_95",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_96",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_97",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_98",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_99",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_100",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_101",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_102",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_103",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_104",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_105",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_106",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_107",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_108",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_109",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_110",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_111",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_112",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_113",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_114",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_115",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_116",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_117",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_118",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_119",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_120",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_121",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_122",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_123",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_124",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_125",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_126",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_127",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_128",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_129",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_130",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_131",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_132",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_133",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_134",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_135",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_136",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_137",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_138",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_139",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_140",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_141",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_142",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_143",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_144",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_145",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_146",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_147",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_148",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_149",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_150",
+        "type": "BOOL"
+    },
+    {
+        "name": "cooc_151",
+        "type": "BOOL"
+    },
+    {
+        "name": "class",
         "type": "INT64"
     }
 ]

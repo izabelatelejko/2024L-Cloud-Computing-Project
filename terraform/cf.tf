@@ -11,7 +11,7 @@ data "archive_file" "serve_cf_zip" {
   source_dir  = "../src/serve_cf"
 }
 
-resource "google_storage_bucket_object" "test_zip" {
+resource "google_storage_bucket_object" "cf_zip" {
   name   = "serving-function-source.zip"
   bucket = google_storage_bucket.serve_cf_bucket.name
   source = data.archive_file.serve_cf_zip.output_path
@@ -28,7 +28,7 @@ resource "google_cloudfunctions2_function" "serve_cf" {
     source {
       storage_source {
         bucket = google_storage_bucket.serve_cf_bucket.name
-        object = google_storage_bucket_object.test_zip.name
+        object = google_storage_bucket_object.cf_zip.name
       }
     }
   }
