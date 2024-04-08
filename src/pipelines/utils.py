@@ -94,10 +94,6 @@ def preprocess_data(df, target_column_name):
 
 
 def model_train(X_processed, target_column_name):
-    try:
-        X_processed = X_processed.drop("Unnamed: 0", axis=1)
-    except:
-        print("No Unnamed in axis found, nothing changed.")
     y = X_processed[target_column_name]
     X = X_processed.drop(columns=[target_column_name])
 
