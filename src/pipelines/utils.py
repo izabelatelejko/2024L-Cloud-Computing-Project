@@ -13,24 +13,15 @@ def remove_highly_correlated_features(df, threshold=0.9):
     return to_drop
 
 
-def remove_constant_features(df):
+def find_constant_features(df):
     return [column for column in df.columns if df[column].nunique() == 1]
 
 
-def standarise_float_columns(df):
-    for column in df.columns:
-        if df[column].dtype == "float64":
-            df[column] = (df[column] - df[column].mean()) / df[column].std()
-    return df
-
-
-def normalise_int_columns(df):
-    for column in df.columns:
-        if df[column].dtype == "int64":
-            df[column] = (df[column] - df[column].min()) / (
-                df[column].max() - df[column].min()
-            )
-    return df
+def standarize_columns(df):
+    df_means = df.mean()
+    df_std = df.std()
+    df = (df - df_means) / df_std
+    return df, df_means.to_list(), df_std.to_list()
 
 
 def initial_pokemon_preprocess(df):
@@ -82,13 +73,23 @@ def preprocess_data(df, target_column_name):
     y = df[target_column_name]
     X = df.drop(columns=[target_column_name])
 
-    X_processed = X.drop(remove_highly_correlated_features(df, threshold=0.7), axis=1)
-    X_processed = X_processed.drop(remove_constant_features(X_processed), axis=1)
-    X_processed = standarise_float_columns(X_processed)
-    X_processed = normalise_int_columns(X_processed)
+    X_high_corr = remove_highly_correlated_features(X, threshold=0.7)
+    X_processed = X.drop(X_high_corr, axis=1)
+
+    X_constant = find_constant_features(X_processed)
+    X_processed = X_processed.drop(X_constant, axis=1)
+
+    X_processed, X_means, X_std = standarize_columns(X_processed)
+
+    training_features = {
+        "means": X_means,
+        "stds": X_std,
+        "consts": X_constant,
+        "high_corrs": X_high_corr,
+    }
     X_processed[target_column_name] = y
 
-    return X_processed
+    return X_processed, training_features
 
 
 def model_train(X_processed, target_column_name):

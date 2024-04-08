@@ -10,6 +10,12 @@ BUCKET_NAME = "project_bucket_52dfc7cd"
 PROJECT_NAME = "cloud-computing-project-418718"
 
 
+def find_top_probas(probas, top_n=3):
+    probas = probas.flatten()
+    top_n_idx = probas.argsort()[-top_n:][::-1]
+    return top_n_idx
+
+
 def find_newest_model(client):
     blobs = client.list_blobs(BUCKET_NAME, prefix="models")
 
@@ -26,7 +32,7 @@ def find_newest_model(client):
 
 
 def get_model_prediction(input_json):
-    storage_client = storage.Client("cloud-computing-project-418718")
+    storage_client = storage.Client(PROJECT_NAME)
     newest_model_name = find_newest_model(storage_client)
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
@@ -35,9 +41,11 @@ def get_model_prediction(input_json):
     model = pickle.loads(model_pickle)
 
     print(pd.DataFrame(input_json, index=[0]))
-    prediction = model.predict(pd.DataFrame(input_json, index=[0]))
+    prediction = model.predict_proba(pd.DataFrame(input_json, index=[0]))
 
-    return f"Got model: {newest_model_name}. The prediction for input is: {prediction}."
+    prediction = find_top_probas(prediction, top_n=3)
+
+    return f"Got model: {newest_model_name}. You can encounter pokemons: {prediction}."
 
 
 @functions_framework.http
