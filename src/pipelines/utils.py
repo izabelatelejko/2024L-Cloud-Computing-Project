@@ -25,8 +25,8 @@ def standarize_columns(df):
 
 
 def initial_pokemon_preprocess(df):
+    df = df.drop(["index"], axis=1)
     n_poke_appeared = np.sum(df.iloc[:, 49:200], axis=1)
-    df = df.drop(["index", "Unnamed: 0"], axis=1)
     cols_to_be_dropped = (
         ["class", "appearedLocalTime", "continent", "city", "weather", "_id"]
         + list(df.columns[36:42])
@@ -94,6 +94,10 @@ def preprocess_data(df, target_column_name):
 
 
 def model_train(X_processed, target_column_name):
+    try:
+        X_processed = X_processed.drop("Unnamed: 0", axis=1)
+    except:
+        print("No Unnamed in axis found, nothing changed.")
     y = X_processed[target_column_name]
     X = X_processed.drop(columns=[target_column_name])
 
