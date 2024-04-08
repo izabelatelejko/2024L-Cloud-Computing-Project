@@ -16,4 +16,3 @@ resource "google_bigquery_table" "main_data" {
         google_bigquery_dataset.common,
     ]
 }
-

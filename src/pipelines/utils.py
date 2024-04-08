@@ -33,17 +33,10 @@ def normalise_int_columns(df):
     return df
 
 
-# to delete:
-# def create_table_from_df(bq_client, df, table_id, write_disposition="WRITE_APPEND"):
-#     job_config = bigquery.LoadJobConfig(write_disposition=write_disposition)
-#     job = bq_client.load_table_from_dataframe(df, table_id, job_config=job_config)
-#     job.result()
-
-
 def initial_pokemon_preprocess(df):
     n_poke_appeared = np.sum(df.iloc[:, 49:200], axis=1)
     cols_to_be_dropped = (
-        ["class", "appearedLocalTime", "continent", "city", "weather", "_id"]
+        ["class", "appearedLocalTime", "continent", "city", "weather", "_id", "index"]
         + list(df.columns[36:42])
         + list(df.columns[43:49])
         + list(df.columns[49:200])
