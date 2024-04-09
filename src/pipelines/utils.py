@@ -66,6 +66,23 @@ def initial_pokemon_preprocess(df):
     df["urbanization_level"] = df["urban"] + df["suburban"] + df["midurban"]
     df = df.drop(["urban", "suburban", "midurban", "rural"], axis=1)
 
+    # Merge two partly cloudy weatheras into one column
+    df["partly-cloudy"] = df["partly-cloudy-day"] + df["partly-cloudy-night"]
+    df = df.drop(["partly-cloudy-day", "partly-cloudy-night"], axis=1)
+
+    # Drop exact times of sunset and sinrise since they provide similar information as the date
+    df = df.drop(
+        [
+            "sunriseHour",
+            "sunriseMinute",
+            "sunriseMinutesMidnight",
+            "sunsetMinutesMidnight",
+            "sunsetHour",
+            "sunsetMinute",
+        ],
+        axis=1,
+    )
+
     return df
 
 
