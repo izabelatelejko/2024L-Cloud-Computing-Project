@@ -32,6 +32,14 @@ def find_newest_model(client):
     return newest_model
 
 
+def preprocess_input(input_df, train_features):
+    input_df = input_df.drop(train_features["consts"], axis=1)
+    input_df = input_df.drop(train_features["high_corrs"], axis=1)
+    input_df = (input_df - train_features["means"]) / train_features["stds"]
+
+    return input_df
+
+
 def get_model_prediction(input_json):
     storage_client = storage.Client(PROJECT_NAME)
     newest_model_folder = find_newest_model(storage_client)
@@ -48,7 +56,10 @@ def get_model_prediction(input_json):
     train_features_pickle = train_features_blob.download_as_string()
     train_features = pickle.loads(train_features_pickle)
 
-    prediction = model.predict_proba(pd.DataFrame(input_json, index=[0]))
+    input_df = pd.DataFrame(input_json, index=[0])
+    input_df = preprocess_input(input_df, train_features)
+
+    prediction = model.predict_proba(input_df)
 
     prediction = find_top_probas(prediction, top_n=3)
 
