@@ -44,3 +44,9 @@ terraform apply # confirm with yes
 ```{sh}
 python3 load_mock_data.py
 ```
+
+### Questions
+
+1. Should train features be saved in bucket along with model?
+2. Model serving on cloud run?
+3. Where to store the metrics?

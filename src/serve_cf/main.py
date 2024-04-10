@@ -7,8 +7,7 @@ import pandas as pd
 from google.cloud import storage
 import os
 
-BUCKET_NAME = "project_bucket_52dfc7cd"
-PROJECT_NAME = "cloud-computing-project-418718"
+from const import BUCKET_NAME, PROJECT_NAME
 
 
 def find_top_probas(probas, top_n=3):
@@ -17,19 +16,19 @@ def find_top_probas(probas, top_n=3):
     return top_n_idx
 
 
-def find_newest_model(client):
+def find_newest_model_date(client):
     blobs = client.list_blobs(BUCKET_NAME, prefix="models")
 
-    newest_model = None
+    newest_model_date = None
     newest_time = datetime.min
 
     for blob in blobs:
         model_timestamp = datetime.strptime(blob.name.split("/")[-2], "%d-%m-%Y:%H%M")
         if model_timestamp > newest_time:
-            newest_model = blob.name.split("/")[-2]
+            newest_model_date = blob.name.split("/")[-2]
             newest_time = model_timestamp
 
-    return newest_model
+    return newest_model_date
 
 
 def preprocess_input(input_df, train_features):
@@ -42,16 +41,16 @@ def preprocess_input(input_df, train_features):
 
 def get_model_prediction(input_json):
     storage_client = storage.Client(PROJECT_NAME)
-    newest_model_folder = find_newest_model(storage_client)
+    newest_model_date = find_newest_model_date(storage_client)
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
 
-    model_blob = model_bucket.blob(os.path.join("models", newest_model_folder, "model"))
+    model_blob = model_bucket.blob(os.path.join("models", newest_model_date, "model"))
     model_pickle = model_blob.download_as_string()
     model = pickle.loads(model_pickle)
 
     train_features_blob = model_bucket.blob(
-        os.path.join("models", newest_model_folder, "preprocess_features")
+        os.path.join("models", newest_model_date, "preprocess_features")
     )
     train_features_pickle = train_features_blob.download_as_string()
     train_features = pickle.loads(train_features_pickle)
@@ -63,9 +62,7 @@ def get_model_prediction(input_json):
 
     prediction = find_top_probas(prediction, top_n=3)
 
-    return (
-        f"Got model: {newest_model_folder}. You can encounter pokemons: {prediction}."
-    )
+    return f"Got model: {newest_model_date}. You can encounter pokemons: {prediction}."
 
 
 @functions_framework.http
