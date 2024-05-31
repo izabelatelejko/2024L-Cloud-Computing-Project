@@ -51,9 +51,15 @@ def update_weather_fields():
         st.session_state.wind_speed = float(r_weather_wind["speed"])
         st.session_state.wind_dir = float(r_weather_wind["deg"])
         st.session_state.pressure = float(r_weather_main["pressure"])
-        st.session_state.temperature = float(r_weather_main["temp"])
+        st.session_state.temperature = float(r_weather_main["temp"]) - 273.15
     else:
         st.write("Please provide latitude and longitude first.")
+
+def get_available_models():
+    st.session_state.model_list = ['Bronze model 1', 'Bronze model 2', 'Gold model 1']
+
+def get_predictions(model_name: str):
+    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 time_of_day_dict = {
     "morning": 0, 
@@ -121,7 +127,7 @@ if not st.session_state["authentication_status"]:
     register_button = sideb.button("Register a new user")
     if register_button:
         switch_page('register a new user')
-    st.write("Please log into the application first.")
+    st.header("Please log into the application first.")
     st.stop()
 else:
     curr_tier = users["credentials"]["usernames"][st.session_state["username"]]["tier"]
@@ -129,13 +135,16 @@ else:
     if curr_tier == 'bronze':
         sideb.button("Upgrade to **gold**", on_click=add_user_to_gold)
     authenticator.logout(location="sidebar")
-    st.write(f"Welcome to PokéFinder, **{st.session_state['name']}**! First, please fill the boxes below with information needed for the application to provide you with the prediction. Then, press the `Choose model` button to see available models.")
+    st.header(f"Welcome to PokéFinder, **{st.session_state['name']}**!")
+    with st.popover("How to use PokéFinder?"):
+        st.write("First, accept the localisation prompt in your browser or input you longitude and latitude manually.")
+        st.write("Then, make sure you select the correct data for the following boxes and sliders.")
+        st.write("Now, only if you've already inputed latitude and longitude, press `Get more weather info for provided longitude and latitude`. It will fill the four boxes below with information about the places in coordinates you've provided.")
+        st.write("Once all the information is given, press `Load avaliable models` button to see available models. Depending on your tier, you might not be able to choose some of them. The selection button next to them will be disabled, but you'll still be able to see them.")
 
 location = get_geolocation()
 lat = location['coords']['latitude']
 lon = location['coords']['longitude']
-st.write(lat)
-st.write(lon)
 
 r = requests.get(f"https://api.sunrisesunset.io/json?lat={lat}&lng={lon}").json()['results']
 curr_time = datetime.now()
@@ -148,9 +157,6 @@ current_date = curr_time.date()
 sunrise_time = datetime.strptime(f"{current_date} {r['sunrise']}", "%Y-%m-%d %I:%M:%S %p")
 sunset_time = datetime.strptime(f"{current_date} {r['sunset']}", "%Y-%m-%d %I:%M:%S %p")
 
-st.write(sunrise_time)
-st.write(sunset_time)
-st.write(curr_time)
 min_from_sunrise = int((curr_time - sunrise_time).total_seconds() / 60)
 min_to_sunset = -int((sunset_time - curr_time).total_seconds() / 60)
 
@@ -207,7 +213,7 @@ request_json = {
     "appearedYear": curr_year,
     "terrainType": terrain_type_dict[input_terrain],
     "closeToWater": 1 if input_water == 'Yes' else 0,
-    "temperature": round(input_temperature - 271.15, 2),
+    "temperature": round(input_temperature, 2),
     "windSpeed": input_wind_speed,
     "windBearing": input_wind_dir,
     "pressure": input_pressure,
@@ -226,6 +232,65 @@ request_json = {
     "partly-cloudy": 1 if st.session_state.partly_cloudy else 0
   }
 
-st.write(request_json)
+st.header('Model selection')
 
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
+    st.session_state.disabled_load_model = False
+
+load_models_button = st.button('Load available models', type="primary", disabled=st.session_state.disabled_load_model)
+if load_models_button:
+    get_available_models()
+    st.session_state.clicked = True
+    st.session_state.disabled_load_model = True
+
+
+st.session_state.disable = (users["credentials"]["usernames"][st.session_state["username"]]["tier"] != 'gold')
+
+if st.session_state.clicked:
+    for i in range(len(st.session_state.model_list)):
+        col1, col2, col3 = st.columns([2, 2, 1])
+        model_name = st.session_state.model_list[i]
+        with col1:
+            st.write(model_name)
+        with col2:
+            st.write('Metric and stuff')
+        with col3:
+            if not (st.session_state.disable and 'Gold' in model_name):
+                if st.button('Select this model', key=model_name):
+                    st.session_state.curr_model = model_name
+            else:
+                if st.button('You need to be **gold** tier to access this model',
+                        disabled=True,
+                        key=model_name):
+                    st.session_state.curr_model = model_name
+        
+    st.text_input('#### Currently selected model', key='curr_model', disabled=True)
+
+    if 'predictions' not in st.session_state:
+        st.session_state.predictions = False
+
+    if st.session_state.curr_model != '':
+
+        if st.button("Get prediction"):
+            poke_ids = get_predictions(st.session_state.curr_model)
+            st.session_state.predictions = True
+
+        if st.session_state.predictions:
+            st.header('The pokémon most likely to appear near you are:')
+
+            pokemon_data = pd.read_csv('pokemon_urls_names.csv')
+            poke_data = pokemon_data[pokemon_data['id'].isin(poke_ids)]
+            poke_data['id'] = pd.Categorical(poke_data['id'], categories=poke_ids, ordered=True)
+            poke_data = poke_data.sort_values('id')
+            images = []
+            names = []
+            for id in poke_ids:
+                images.append('poke_img/' + poke_data[poke_data['id'] == id]['name'].values[0] + '.jpg')
+                names.append(poke_data[poke_data['id'] == id]['name'].values[0])
+            st.image(
+                images,
+                caption=names,
+                width=200
+            )
 

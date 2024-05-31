@@ -36,4 +36,5 @@ else:
     if register_button:
         switch_page('register a new user')
 
-st.image('https://fontmeme.com/permalink/240530/1ebf16cfa649ebd03d7b91152d61ddb5.png')
+#https://fontmeme.com/permalink/240530/1ebf16cfa649ebd03d7b91152d61ddb5.png
+st.image('pokefinder.png')

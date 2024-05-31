@@ -14,10 +14,10 @@ credentials:
     abcabc:
       email: abc@abc.abc
       failed_login_attempts: 0
-      logged_in: false
+      logged_in: true
       name: abcabc
       password: $2b$12$IBzL7ZLLgyoz2wVBDEM5uOJGra7X7KU4NCZMKrmkq6.EMaoCkwU4.
-      tier: gold
+      tier: bronze
     gzbrz:
       email: asasas@dsdsd.pl
       failed_login_attempts: 0
