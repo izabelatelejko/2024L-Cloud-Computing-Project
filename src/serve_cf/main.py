@@ -16,19 +16,22 @@ def find_top_probas(probas, top_n=3):
     return top_n_idx
 
 
-def find_newest_model_date(client):
-    blobs = client.list_blobs(BUCKET_NAME, prefix="models")
+def find_newest_model_date(client, model_name):
+    blobs = client.list_blobs(BUCKET_NAME, prefix="models/" + model_name + "/")
 
     newest_model_date = None
+    newest_model_accuracy = None
     newest_time = datetime.min
 
     for blob in blobs:
-        model_timestamp = datetime.strptime(blob.name.split("/")[-2], "%d-%m-%Y:%H%M")
+        model_path = blob.name.split("/")[-1]
+        model_timestamp = datetime.strptime(model_path.split("_")[0], "%d-%m-%Y:%H%M")
         if model_timestamp > newest_time:
-            newest_model_date = blob.name.split("/")[-2]
+            newest_model_date = model_path.split("_")[0]
             newest_time = model_timestamp
+            newest_model_accuracy = model_path.split("_")[1]
 
-    return newest_model_date
+    return newest_model_date, newest_model_accuracy
 
 
 def preprocess_input(input_df, train_features):
@@ -41,7 +44,7 @@ def preprocess_input(input_df, train_features):
 
 def get_model_prediction(input_json, model_name, model_accuracy):
     storage_client = storage.Client(PROJECT_NAME)
-    newest_model_date = find_newest_model_date(storage_client)
+    newest_model_date, _ = find_newest_model_date(storage_client, model_name)
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
 
@@ -69,8 +72,16 @@ def get_model_prediction(input_json, model_name, model_accuracy):
     return f"Got model: {newest_model_date}. You can encounter pokemons: {prediction}."
 
 
-def get_model_metrics(input_json):
-    pass
+def get_model_metrics():
+    model_names = [f"clf{i}" for i in range(5)]
+    storage_client = storage.Client(PROJECT_NAME)
+    models_with_acc = {}
+    for model_name in model_names:
+        print(model_name)
+        _, model_acc = find_newest_model_date(storage_client, model_name)
+        models_with_acc[model_name] = model_acc
+
+    return models_with_acc
 
 
 @functions_framework.http
@@ -83,5 +94,5 @@ def run(request):
             json.loads(request.get_json().get("input")), model_name, model_accuracy
         )
     elif request_type == "get_model_metrics":
-        return_value = get_model_metrics(json.loads(request.get_json().get("input")))
+        return_value = get_model_metrics()
     return return_value

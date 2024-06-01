@@ -112,6 +112,23 @@ def preprocess_data(df, target_column_name):
     return X_processed, training_features
 
 
+def calc_custom_acc(y_true, preds):
+
+    def find_top_probas(probas, top_n=3):
+        probas = probas.flatten()
+        top_n_idx = probas.argsort()[-top_n:][::-1]
+        return top_n_idx
+
+    count = 0
+    for probas, y in zip(preds, y_true):
+        good_poks = find_top_probas(probas, top_n=3) + 1
+        if y in good_poks:
+            count += 1
+    count / y_true.shape[0]
+
+    return count
+
+
 def model_train(X_processed, target_column_name):
     y = X_processed[target_column_name]
     X = X_processed.drop(columns=[target_column_name])
@@ -123,7 +140,7 @@ def model_train(X_processed, target_column_name):
     clf2 = GradientBoostingClassifier()
     clf3 = KNeighborsClassifier()
     clf4 = RandomForestClassifier(
-        random_state=1307, n_estimators=100, criterion="entropy"
+        max_depth=3, random_state=1307, n_estimators=100, criterion="entropy"
     )
     clf5 = LogisticRegression(max_iter=1000)
 
@@ -139,3 +156,4 @@ def model_train(X_processed, target_column_name):
     clf5.fit(X, y)
 
     return [clf1, clf2, clf3, clf4, clf5]
+    # return [clf1, clf4]
