@@ -4,9 +4,8 @@ import numpy as np
 import pandas as pd
 from google.cloud import bigquery
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.naive_bayes import GaussianNB
 
 
 def remove_highly_correlated_features(df, threshold=0.9):
@@ -121,21 +120,22 @@ def model_train(X_processed, target_column_name):
     clf1 = RandomForestClassifier(
         max_depth=5, random_state=1307, n_estimators=100, class_weight="balanced"
     )
-    # clf2 = GradientBoostingClassifier()
-    # clf3 = GaussianNB()
-    # clf4 = SVC(max_iter=1000)
-    # clf5 = LogisticRegression(max_iter=1000)
+    clf2 = GradientBoostingClassifier()
+    clf3 = KNeighborsClassifier()
+    clf4 = RandomForestClassifier(
+        random_state=1307, n_estimators=100, criterion="entropy"
+    )
+    clf5 = LogisticRegression(max_iter=1000)
 
     print("Fitting model 1...")
     clf1.fit(X, y)
-    # print("Fitting model 2...")
-    # clf2.fit(X, y)
-    # print("Fitting model 3...")
-    # clf3.fit(X, y)
-    # print("Fitting model 4...")
-    # clf4.fit(X, y)
-    # print("Fitting model 5...")
-    # clf5.fit(X, y)
+    print("Fitting model 2...")
+    clf2.fit(X, y)
+    print("Fitting model 3...")
+    clf3.fit(X, y)
+    print("Fitting model 4...")
+    clf4.fit(X, y)
+    print("Fitting model 5...")
+    clf5.fit(X, y)
 
-    # return [clf1, clf2, clf3, clf4, clf5]
-    return [clf1]
+    return [clf1, clf2, clf3, clf4, clf5]
