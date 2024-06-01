@@ -75,8 +75,7 @@ def get_model_prediction(input_json, model_name, model_accuracy):
 
 
 def get_model_metrics():
-    # model_names = [f"clf{i}" for i in range(5)]
-    model_names = [f"clf{i}" for i in range(2)]
+    model_names = [f"clf{i}" for i in range(5)]
     storage_client = storage.Client(PROJECT_NAME)
     models_with_acc = {}
     for model_name in model_names:
