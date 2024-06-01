@@ -155,4 +155,3 @@ def model_train(X_processed, target_column_name):
     clf5.fit(X, y)
 
     return [clf1, clf2, clf3, clf4, clf5]
-    # return [clf1, clf4]

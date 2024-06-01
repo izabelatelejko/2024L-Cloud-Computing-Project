@@ -44,13 +44,15 @@ def preprocess_input(input_df, train_features):
 
 def get_model_prediction(input_json, model_name, model_accuracy):
     storage_client = storage.Client(PROJECT_NAME)
-    newest_model_date, _ = find_newest_model_date(storage_client, model_name)
+    newest_model_date = model_name.split("/")[1]
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
 
     model_blob = model_bucket.blob(
         os.path.join(
-            "models", model_name, newest_model_date + "_" + str(model_accuracy)
+            "models",
+            model_name.split("/")[0],
+            newest_model_date + "_" + str(model_accuracy),
         )
     )
     model_pickle = model_blob.download_as_string()
@@ -80,8 +82,10 @@ def get_model_metrics():
     models_with_acc = {}
     for model_name in model_names:
         print(model_name)
-        _, model_acc = find_newest_model_date(storage_client, model_name)
-        models_with_acc[model_name] = model_acc
+        newest_model_date, model_acc = find_newest_model_date(
+            storage_client, model_name
+        )
+        models_with_acc[model_name + "/" + newest_model_date] = model_acc
 
     return models_with_acc
 
