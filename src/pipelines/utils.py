@@ -27,7 +27,10 @@ def standarize_columns(df):
 
 
 def initial_pokemon_preprocess(df):
-    df = df.drop(["index"], axis=1)
+    try:
+        df = df.drop(["index"], axis=1)
+    except:
+        print("No need to cut of index, it does not exist in table.")
     n_poke_appeared = np.sum(df.iloc[:, 49:200], axis=1)
     cols_to_be_dropped = (
         ["class", "appearedLocalTime", "continent", "city", "weather", "_id"]
