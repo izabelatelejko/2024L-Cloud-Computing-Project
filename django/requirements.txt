@@ -1,8 +1,0 @@
-asgiref==3.8.1
-sqlparse==0.4.4
-Django==5.0
-django-environ==0.10.0
-django-storages[google]==1.13.2
-google-cloud-run==0.10.1
-gunicorn==20.1.0
-psycopg2-binary==2.9.9
