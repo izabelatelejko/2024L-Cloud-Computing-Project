@@ -39,18 +39,22 @@ def preprocess_input(input_df, train_features):
     return input_df
 
 
-def get_model_prediction(input_json):
+def get_model_prediction(input_json, model_name, model_accuracy):
     storage_client = storage.Client(PROJECT_NAME)
     newest_model_date = find_newest_model_date(storage_client)
 
     model_bucket = storage_client.bucket(BUCKET_NAME)
 
-    model_blob = model_bucket.blob(os.path.join("models", newest_model_date, "model"))
+    model_blob = model_bucket.blob(
+        os.path.join("models", model_name, newest_model_date + "_" + model_accuracy)
+    )
     model_pickle = model_blob.download_as_string()
     model = pickle.loads(model_pickle)
 
     train_features_blob = model_bucket.blob(
-        os.path.join("models", newest_model_date, "preprocess_features")
+        os.path.join(
+            "models", "train_features", newest_model_date, "preprocess_features"
+        )
     )
     train_features_pickle = train_features_blob.download_as_string()
     train_features = pickle.loads(train_features_pickle)
@@ -65,9 +69,19 @@ def get_model_prediction(input_json):
     return f"Got model: {newest_model_date}. You can encounter pokemons: {prediction}."
 
 
+def get_model_metrics(input_json):
+    pass
+
+
 @functions_framework.http
 def run(request):
     request_type = request.get_json().get("request_type")
+    model_name = request.get_json().get("model_name")
+    model_accuracy = request.get_json().get("model_accuracy")
     if request_type == "get_model_prediction":
-        return_value = get_model_prediction(json.loads(request.get_json().get("input")))
+        return_value = get_model_prediction(
+            json.loads(request.get_json().get("input")), model_name, model_accuracy
+        )
+    elif request_type == "get_model_metrics":
+        return_value = get_model_metrics(json.loads(request.get_json().get("input")))
     return return_value
