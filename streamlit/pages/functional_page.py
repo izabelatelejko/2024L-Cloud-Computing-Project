@@ -1,15 +1,18 @@
 import streamlit as st
 import streamlit_authenticator as stauth
+import numpy as np
+import pandas as pd
 import yaml
 import requests
-import pandas as pd
+import time
+import json
+import re
 from yaml.loader import SafeLoader
 from streamlit_js_eval import get_geolocation
 from datetime import datetime
 from utils import decide_time_of_day
 from streamlit_extras.switch_page_button import switch_page
 from st_pages import hide_pages
-import time
 
 hide_pages(["Register a new user"])
 
@@ -57,10 +60,52 @@ def update_weather_fields():
         st.write("Please provide latitude and longitude first.")
 
 def get_available_models():
-    st.session_state.model_list = ['Bronze model 1', 'Bronze model 2', 'Gold model 1']
+    r = requests.post(
+        "https://europe-west3-cloud-computing-project-418718.cloudfunctions.net/serve-cf",
+        headers={
+            # "Authorization": f"Bearer {creds.token}",
+            "Content-Type": "application/json",
+        },
+        json={"request_type": "get_model_metrics"},
+    )
+    model_dict = json.loads(r.content)
+    model_names = []
+    model_metrics = []
+    model_orig_names = []
+    for key, value in model_dict.items():
+        model_orig_names.append(key)
+        model_metrics.append(int(value))
+    model_ranks = np.argsort(model_metrics)
+    model_orig_names = np.array(model_orig_names)
+    model_orig_names = model_orig_names[model_ranks]
 
-def get_predictions(model_name: str, request_json: dict):
-    return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    i = 1
+    for idx, model in enumerate(model_ranks):
+        if idx >= len(model_ranks) - 1:
+            model_names.append(f'Gold Model {i}')
+            i += 1
+        else:
+            model_names.append(f'Bronze Model {idx + 1}')
+    model_metrics.sort()
+
+    st.session_state.model_names = model_names
+    st.session_state.model_metrics = model_metrics
+    st.session_state.model_orig_names = model_orig_names
+
+def get_predictions(model_name: str, model_acc: int, request_json: dict):
+    r = requests.post(
+        "https://europe-west3-cloud-computing-project-418718.cloudfunctions.net/serve-cf",
+        headers={
+            # "Authorization": f"Bearer {creds.token}",
+            "Content-Type": "application/json",
+        },
+        json={"request_type": "get_model_prediction",
+              "model_name": model_name,
+              "model_accuracy": model_acc,
+               "input": json.dumps(request_json)},
+    )
+    bin_list =  r.content
+    return list(map(int, re.findall(r'\d+', bin_list.decode())))
 
 time_of_day_dict = {
     "morning": 0, 
@@ -250,13 +295,14 @@ if load_models_button:
 st.session_state.disable = (users["credentials"]["usernames"][st.session_state["username"]]["tier"] != 'gold')
 
 if st.session_state.clicked:
-    for i in range(len(st.session_state.model_list)):
+    for i in range(len(st.session_state.model_names)):
         col1, col2, col3 = st.columns([2, 2, 1])
-        model_name = st.session_state.model_list[i]
+        model_name = st.session_state.model_names[i]
+        model_metric = st.session_state.model_metrics[i]
         with col1:
             st.write(model_name)
         with col2:
-            st.write('Metric and stuff')
+            st.write(f"Accuracy: {model_metric}%")
         with col3:
             if not (st.session_state.disable and 'Gold' in model_name):
                 if st.button('Select this model', key=model_name):
@@ -277,12 +323,18 @@ if st.session_state.clicked:
     if st.session_state.curr_model != '':
 
         if st.button("Get prediction"):
-            poke_ids = get_predictions(st.session_state.curr_model, request_json)
+            for i in range(len(st.session_state.model_names)):
+                if str(st.session_state.model_names[i]) == (st.session_state.curr_model):
+                    idx = i
+                    break
+            real_model_name = st.session_state.model_orig_names[idx]
+            real_model_acc = st.session_state.model_metrics[idx]
+            poke_ids = get_predictions(real_model_name, real_model_acc, request_json)
             st.session_state.predictions = True
 
         if st.session_state.predictions:
             if len(poke_ids) > 0:
-                st.header('The 10 Pokémon most likely to appear near you are:')
+                st.header(f'The {len(poke_ids)} Pokémon most likely to appear near you are:')
 
             pokemon_data = pd.read_csv('pokemon_urls_names.csv')
             poke_data = pokemon_data[pokemon_data['id'].isin(poke_ids)]
