@@ -189,6 +189,11 @@ else:
         st.write("Once all the information is given, press `Load avaliable models` button to see available models. Depending on your tier, you might not be able to choose some of them. The selection button next to them will be disabled, but you'll still be able to see them.")
 
 location = get_geolocation()
+if location is None:
+    location = {}
+    location['coords'] = {}
+    location['coords']['latitude'] = 0
+    location['coords']['longitude'] = 0
 time.sleep(0.5)
 lat = location['coords']['latitude']
 lon = location['coords']['longitude']

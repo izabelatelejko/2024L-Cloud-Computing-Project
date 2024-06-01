@@ -3,7 +3,6 @@ import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
 from st_pages import hide_pages
-from streamlit_extras.switch_page_button import switch_page
 
 hide_pages(["Register a new user"])
 
