@@ -124,9 +124,8 @@ def calc_custom_acc(y_true, preds):
         good_poks = find_top_probas(probas, top_n=3) + 1
         if y in good_poks:
             count += 1
-    count / y_true.shape[0]
 
-    return count
+    return count / y_true.shape[0]
 
 
 def model_train(X_processed, target_column_name):

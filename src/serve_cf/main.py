@@ -49,7 +49,9 @@ def get_model_prediction(input_json, model_name, model_accuracy):
     model_bucket = storage_client.bucket(BUCKET_NAME)
 
     model_blob = model_bucket.blob(
-        os.path.join("models", model_name, newest_model_date + "_" + model_accuracy)
+        os.path.join(
+            "models", model_name, newest_model_date + "_" + str(model_accuracy)
+        )
     )
     model_pickle = model_blob.download_as_string()
     model = pickle.loads(model_pickle)
@@ -67,13 +69,14 @@ def get_model_prediction(input_json, model_name, model_accuracy):
 
     prediction = model.predict_proba(input_df)
 
-    prediction = find_top_probas(prediction, top_n=3)
+    prediction = find_top_probas(prediction, top_n=9)
 
-    return f"Got model: {newest_model_date}. You can encounter pokemons: {prediction}."
+    return f"{prediction}"
 
 
 def get_model_metrics():
-    model_names = [f"clf{i}" for i in range(5)]
+    # model_names = [f"clf{i}" for i in range(5)]
+    model_names = [f"clf{i}" for i in range(2)]
     storage_client = storage.Client(PROJECT_NAME)
     models_with_acc = {}
     for model_name in model_names:
