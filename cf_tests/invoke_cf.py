@@ -14,14 +14,13 @@ import json
 with open("test_input.json") as f:
     input_json = json.load(f)[0]
 
-
 r = requests.post(
     "https://europe-west3-cloud-computing-project-418718.cloudfunctions.net/serve-cf",
     headers={
         # "Authorization": f"Bearer {creds.token}",
         "Content-Type": "application/json",
     },
-    json={"request_type": "get_model_prediction", "input": json.dumps(input_json)},
+    json={"request_type": "get_model_metrics", "input": json.dumps(input_json)},
 )
 # out = r.content.decode("ascii")
 # out = json.loads(out)

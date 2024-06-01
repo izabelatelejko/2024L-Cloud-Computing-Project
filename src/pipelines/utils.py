@@ -3,7 +3,9 @@
 import numpy as np
 import pandas as pd
 from google.cloud import bigquery
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
 
 
 def remove_highly_correlated_features(df, threshold=0.9):
@@ -110,13 +112,48 @@ def preprocess_data(df, target_column_name):
     return X_processed, training_features
 
 
+def calc_custom_acc(y_true, preds):
+
+    def find_top_probas(probas, top_n=3):
+        probas = probas.flatten()
+        top_n_idx = probas.argsort()[-top_n:][::-1]
+        return top_n_idx
+
+    count = 0
+    for probas, y in zip(preds, y_true):
+        good_poks = find_top_probas(probas, top_n=3) + 1
+        if y in good_poks:
+            count += 1
+    count / y_true.shape[0]
+
+    return count
+
+
 def model_train(X_processed, target_column_name):
     y = X_processed[target_column_name]
     X = X_processed.drop(columns=[target_column_name])
 
-    clf = RandomForestClassifier(
+    print("Defining models...")
+    clf1 = RandomForestClassifier(
         max_depth=5, random_state=1307, n_estimators=100, class_weight="balanced"
     )
-    clf.fit(X, y)
+    clf2 = GradientBoostingClassifier()
+    clf3 = KNeighborsClassifier()
+    clf4 = RandomForestClassifier(
+        max_depth=3, random_state=1307, n_estimators=100, criterion="entropy"
+    )
+    clf5 = LogisticRegression(max_iter=1000)
 
-    return clf
+    print("Fitting model 1...")
+    clf1.fit(X, y)
+    print("Fitting model 2...")
+    clf2.fit(X, y)
+    print("Fitting model 3...")
+    clf3.fit(X, y)
+    print("Fitting model 4...")
+    clf4.fit(X, y)
+    print("Fitting model 5...")
+    clf5.fit(X, y)
+
+    return [clf1, clf2, clf3, clf4, clf5]
+    # return [clf1, clf4]
