@@ -9,6 +9,7 @@ from datetime import datetime
 from utils import decide_time_of_day
 from streamlit_extras.switch_page_button import switch_page
 from st_pages import hide_pages
+import time
 
 hide_pages(["Register a new user"])
 
@@ -58,7 +59,7 @@ def update_weather_fields():
 def get_available_models():
     st.session_state.model_list = ['Bronze model 1', 'Bronze model 2', 'Gold model 1']
 
-def get_predictions(model_name: str):
+def get_predictions(model_name: str, request_json: dict):
     return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 time_of_day_dict = {
@@ -139,10 +140,11 @@ else:
     with st.popover("How to use PokéFinder?"):
         st.write("First, accept the localisation prompt in your browser or input you longitude and latitude manually.")
         st.write("Then, make sure you select the correct data for the following boxes and sliders.")
-        st.write("Now, only if you've already inputed latitude and longitude, press `Get more weather info for provided longitude and latitude`. It will fill the four boxes below with information about the places in coordinates you've provided.")
+        st.write("Now, only if you've already input latitude and longitude, press `Get more weather info for provided longitude and latitude`. It will fill the four boxes below with information about the places in coordinates you've provided.")
         st.write("Once all the information is given, press `Load avaliable models` button to see available models. Depending on your tier, you might not be able to choose some of them. The selection button next to them will be disabled, but you'll still be able to see them.")
 
 location = get_geolocation()
+time.sleep(0.5)
 lat = location['coords']['latitude']
 lon = location['coords']['longitude']
 
@@ -170,12 +172,12 @@ input_terrain = st.selectbox(label="What kind of terrain are you in?",
                              options=list(terrain_type_dict.keys()))
 input_urban = st.selectbox(label="How urbanised is the area you're in?",
                            options=list(urbanisation_dict.keys()))
-input_poke_num = st.slider("How many pokémon are near you?", 0, 15, 3)
+input_poke_num = st.slider("How many Pokémon are near you?", 0, 15, 3)
 input_pokestop_dist = st.slider("How many km are you from the nearest pokestop?", 0.0, 20.0, 1.0, step=0.1)
 input_gym_dist = st.slider("How many km are you from the nearest gym?", 0.0, 20.0, 1.0, step=0.1)
 pop_density = get_population_density(input_lat, input_lon)
 input_density = st.number_input("What's the estimated population density of where you are now?",
-                                value =  pop_density if lat != 0 and lon != 0 and pop_density != -9999.0 else 60)
+                                value =  pop_density if lat != 0 and lon != 0 and pop_density != -9999.0 else 100)
 # input_tod = st.text_input(label="Time of day",
 #               value=decide_time_of_day(curr_hour))
 # input_h = st.number_input(label="Current hour",
@@ -198,7 +200,7 @@ weather_button = st.button('Get more weather info for provided longitude and lat
 
 input_wind_speed = st.number_input(label="Wind speed", key='wind_speed')
 input_wind_dir = st.number_input(label="Wind direction (in degrees)", key='wind_dir')
-input_pressure = st.number_input(label="Atmpospheric pressure", key='pressure')
+input_pressure = st.number_input(label="Atmospheric pressure", key='pressure')
 input_temperature = st.number_input(label="Temperature (in °C)", key='temperature')
 
 request_json = {
@@ -267,17 +269,20 @@ if st.session_state.clicked:
         
     st.text_input('#### Currently selected model', key='curr_model', disabled=True)
 
+    poke_ids = []
+
     if 'predictions' not in st.session_state:
         st.session_state.predictions = False
 
     if st.session_state.curr_model != '':
 
         if st.button("Get prediction"):
-            poke_ids = get_predictions(st.session_state.curr_model)
+            poke_ids = get_predictions(st.session_state.curr_model, request_json)
             st.session_state.predictions = True
 
         if st.session_state.predictions:
-            st.header('The pokémon most likely to appear near you are:')
+            if len(poke_ids) > 0:
+                st.header('The 10 Pokémon most likely to appear near you are:')
 
             pokemon_data = pd.read_csv('pokemon_urls_names.csv')
             poke_data = pokemon_data[pokemon_data['id'].isin(poke_ids)]
