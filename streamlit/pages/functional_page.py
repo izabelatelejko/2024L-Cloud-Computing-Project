@@ -81,7 +81,7 @@ def get_available_models():
 
     i = 1
     for idx, model in enumerate(model_ranks):
-        if idx >= len(model_ranks) - 1:
+        if idx >= len(model_ranks) - 2:
             model_names.append(f'Gold Model {i}')
             i += 1
         else:
