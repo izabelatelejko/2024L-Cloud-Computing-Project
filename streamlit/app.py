@@ -12,7 +12,7 @@ def add_user_to_gold():
         yaml.dump(users, file, default_flow_style=False)
 
 
-def regiter_user():
+def register_user():
     try:
         (
             email_of_registered_user,
@@ -43,7 +43,7 @@ authenticator = stauth.Authenticate(
 authenticator.login()
 
 if st.session_state["authentication_status"]:
-    st.write(f"Welcome *{st.session_state['name']}*")
+    st.write(f"Welcome, *{st.session_state['name']}*!")
     if (
         users["credentials"]["usernames"][st.session_state["username"]]["tier"]
         == "gold"
@@ -72,6 +72,6 @@ if st.session_state["authentication_status"]:
     authenticator.logout(location="sidebar")
 elif st.session_state["authentication_status"] is False:
     st.error("Username/password is incorrect")
-    regiter_user()
+    register_user()
 elif st.session_state["authentication_status"] is None:
-    regiter_user()
+    register_user()
