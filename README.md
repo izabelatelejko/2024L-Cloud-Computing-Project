@@ -42,9 +42,3 @@ First `cd` to the `cf_tests` directory and make sure you have desired input or t
 ```{sh}
 python .\invoke_cf.py
 ```
-
-### Questions
-
-1. Should train features be saved in bucket along with model?
-2. Model serving on cloud run?
-3. Where to store the metrics?
